@@ -1,7 +1,16 @@
 #pragma once
 
 #include <string>
+#include <cstdint>
 
+//视频head信息
+typedef struct {
+        uint8_t data[256];      //head数据
+        uint32_t size;      //数据大小
+} SpsHeader;
+
+
+// 输入图片的格式
 enum  eFormatType
 {
     BGR24 = 0x00,
@@ -14,6 +23,8 @@ enum  eFormatType
     // YUV420P = 0x07,
 };
 
+
+//编码结果流格式
 enum eStreamType
 {
     H264 = 0x00,
@@ -22,19 +33,27 @@ enum eStreamType
 };
 
 struct FrameInfo {
-    uint32_t height;
-    uint32_t width;
-    short format;
-    uint8_t fps;
+    uint32_t height;    //frame高
+    uint32_t width;     //frame宽
+    short format;   //eFormatType
+    uint32_t fps;    //帧率
     
 };
 
 struct StreamInfo {
-    short StreamType;
-    uint32_t gop;
+    short StreamType;   //eStreamType
+    uint32_t gop;       //
 };
 
-typedef struct {
-        uint8_t *data;
-        uint32_t size;
-} SpsHeader;
+typedef struct InputInfo{
+    int width = 0;          //视频宽
+    int height = 0;         //视频高
+    int fps = 30;           //视频帧率
+    short avcodeid = 27;    //编码器id
+    short pixfmt = 0;       //编码的数据格式
+    char codecname[256];    //编码器名称
+    uint8_t data[256];      //head数据
+    uint32_t size;          //数据大小
+    int rkencode = 0;       //是否使用rkmpp编码
+    short format;           //eFormatType
+} InputInfo ;
